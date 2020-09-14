@@ -47,19 +47,20 @@ passport.use(
     }*/
     
     async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await User.findOne({ googleId: profile.id });
+      const existingUser = await User.findOne({ googleId: profile.id }); console.log(profile);
       if (existingUser) {
         //already have a record with the given profile ID
         return done(null, existingUser);
       } else {
+        
         //We don't have a record with this ID, make a new record
         const user = await new User({
           googleId: profile.id,
           fullName: profile.displayName,
           email: profile.emails[0].value,
           provider: profile.provider,
-          givenName: profile.name.givenName,
-          familyName: profile.name.familyName,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
           photo: profile.photos[0].value,
         })
           .save()
