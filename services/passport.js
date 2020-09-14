@@ -71,27 +71,35 @@ passport.use(
 );
 
 
-passport.use(new FacebookStrategy(
-  {
-  clientID: keys.facebookClientID,
-  clientSecret: keys.facebookClientSecret,
-  callbackURL: '/auth/facebook/callback',
-  proxy: true
-  },
-  async ( profile, done) => {
-    console.log(profile);
-    
-      const existingUser = await User.findOne({ facebookId: profile.id })
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: keys.facebookClientID,
+      clientSecret: keys.facebookClientSecret,
+      callbackURL: '/auth/facebook/callback',
+      proxy: true,
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      console.log(profile);
+
+      const existingUser = await User.findOne({ facebookId: profile.id });
       if (existingUser) {
         //already have a record with the given profile ID
-        return done(null, existingUser)
-      } 
-        //We don't have a record with this ID, make a new record 
-    const user = new User({ facebookId: profile.id, fullName: profile.displayName, provider: profile.provider, firstName: profile.name.givenName, lastName: profile.name.familyName }).save();
-        //.done(null, user);
+        //return done(null, existingUser)
+      }
+      //We don't have a record with this ID, make a new record
+      const user = new User({
+        facebookId: profile.id,
+        fullName: profile.displayName,
+        provider: profile.provider,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+      }).save();
+      //.done(null, user);
       //console.log('profile', profile);
     }
-));
+  )
+);
 
 
 
