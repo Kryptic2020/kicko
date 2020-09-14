@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import Test from './Test';
 import Login from './Login';
 
 const Header = () => <div>Header</div>;
@@ -9,10 +10,8 @@ const App = () => {
     <div>
       <BrowserRouter>
         <div>
-          <Route path="/" component={Header} />
-        </div><hr></hr>
-        <div>
-          <Login/>
+          <Route path="/" exact component={Test} />
+          <Route path="/Login" component={Login} />
         </div>
       </BrowserRouter>
     </div>

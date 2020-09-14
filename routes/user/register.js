@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-require('../../models/User');
 
 const { registerValidation } = require('../../api/middlewares/validation');
 

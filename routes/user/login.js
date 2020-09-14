@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('../../models/User');
 
 const { jwtToken } = require('../../config/index');
 const { loginValidation } = require('../../api/middlewares/validation');
 
 // Users Model
 const User = mongoose.model('user');
-//const User = require('../../../models/user');
 
 module.exports = app => {
   // @route GET api/user

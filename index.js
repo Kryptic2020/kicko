@@ -26,6 +26,7 @@ app.use(passport.session());
 // Define routes.
 require('./routes/googleAuthRoutes')(app);
 require('./routes/facebookAuthRoutes')(app);
+//require('./routes/appleAuthRoutes')(app);
 
 //test 
 /*
