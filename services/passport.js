@@ -2,7 +2,7 @@ const passport = require('passport');
 require('../models/User');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 //const LocalStrategy = require('passport-local').Strategy;
-//const FacebookStrategy = require('passport-facebook').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
 //const bcrypt = require('bcrypt');
@@ -47,7 +47,7 @@ passport.use(
     }*/
     
     async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await User.findOne({ googleId: profile.id }); console.log(profile);
+      const existingUser = await User.findOne({ googleId: profile.id }); console.log('hi');
       if (existingUser) {
         //already have a record with the given profile ID
         return done(null, existingUser);
@@ -63,12 +63,36 @@ passport.use(
           lastName: profile.name.familyName,
           photo: profile.photos[0].value,
         })
-          .save()
-          .done(null, user);
+          .save();
+          //.done(null, user);
       }
     }
   )
 );
+
+
+passport.use(new FacebookStrategy(
+  {
+  clientID: keys.facebookClientID,
+  clientSecret: keys.facebookClientSecret,
+  callbackURL: '/auth/facebook/callback',
+  proxy: true
+  },
+  async ( profile, done) => {
+    console.log(profile);
+    
+      const existingUser = await User.findOne({ facebookId: profile.id })
+      if (existingUser) {
+        //already have a record with the given profile ID
+        return done(null, existingUser)
+      } 
+        //We don't have a record with this ID, make a new record 
+    const user = new User({ facebookId: profile.id, fullName: profile.displayName, provider: profile.provider, firstName: profile.name.givenName, lastName: profile.name.familyName }).save();
+        //.done(null, user);
+      //console.log('profile', profile);
+    }
+));
+
 
 
 
@@ -106,26 +130,4 @@ passport.use(
   )
 );
 */
-/*
-passport.use(new FacebookStrategy(
-  {
-  clientID: keys.facebookClientID,
-  clientSecret: keys.facebookClientSecret,
-  callbackURL: '/auth/facebook/callback',
-  proxy: true
-  },
-  async ( profile, done) => {
-    console.log(profile);
-    
-      const existingUser = await User.findOne({ facebookId: profile.id })
-      if (existingUser) {
-        //already have a record with the given profile ID
-        return done(null, existingUser)
-      } 
-        //We don't have a record with this ID, make a new record 
-    const user = new User({ facebookId: profile.id, fullName: profile.displayName, provider: profile.provider, givenName: profile.name.givenName, familyName: profile.name.familyName}).save()
-        .done(null, user);
-      //console.log('profile', profile);
-    }
-));*/
 
