@@ -48,14 +48,14 @@ passport.use(
     }*/
     
 		async (accessToken, refreshToken, profile, done) => {
-			const existingUser = await User.findOne({ googleId: profile.id }); console.log('hi');
+			const existingUser = await User.findOne({ googleId: profile.id });
 			if (existingUser) {
 				//already have a record with the given profile ID
 				return done(null, existingUser);
 			} else {
         
 				//We don't have a record with this ID, make a new record
-				const user = await new User({
+				const user = new User({
 					googleId: profile.id,
 					fullName: profile.displayName,
 					email: profile.emails[0].value,
@@ -63,9 +63,7 @@ passport.use(
 					firstName: profile.name.givenName,
 					lastName: profile.name.familyName,
 					photo: profile.photos[0].value,
-				})
-					.save();
-				//.done(null, user);
+				}).save().then(user => done(null, user));
 			}
 		}
 	)
@@ -95,13 +93,10 @@ passport.use(
 				provider: profile.provider,
 				firstName: profile.name.givenName,
 				lastName: profile.name.familyName,
-			}).save();
-			//.done(null, user);
-			//console.log('profile', profile);
+			}).save().then(user => done(null, user));
 		}
 	)
 );
-
 /*
 passport.use(
   new AppleStrategy(
