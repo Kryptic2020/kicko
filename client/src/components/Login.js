@@ -15,10 +15,10 @@ const Test = () => {
           <span className={classes.Logo}>Logo</span>
           <span className={classes.AppName}>Kicko</span>
         </div>
-        <input placeholder="Email address" className={classes.Email}></input>
-        <input placeholder="Password" className={classes.Password}></input>
-        <div className={classes.ForgotPass}>Forgot your password</div>
-        <div className={classes.Login}>Login</div>
+          <input placeholder="Email address" className={classes.Email}></input>
+          <input placeholder="Password" className={classes.Password}></input>
+          <div className={classes.ForgotPass}>Forgot your password</div>
+          <button className={classes.Login}>Login</button>
         <div style={{ marginTop: '31px' }}>
           <span className={classes.Or}>
             ______________________ Or ______________________

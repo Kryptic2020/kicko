@@ -8,13 +8,16 @@ module.exports = app => {
 			res.redirect('/');
 		}
 	);
+};
 
+
+
+
+/*
 	app.get('/profile', (req, res) => {
 		res.send('You are a valid user');
 	});
 
 	app.get('/failed', (req, res) => {
 		res.send('You are not a valid user');
-	});
-
-};
+	});*/

@@ -16,10 +16,14 @@ const userSchema = new Schema({
 	email: {
 		type: String,
 		//required: true,
-		unique: 'Two users cannot share the same email ({VALUE})',
+		//unique: 'Two users cannot share the same email ({VALUE})',
 	},
 	password: {
 		type: String,
+		//required: true,
+	},
+	emailVerified: {
+		type: Boolean,
 		//required: true,
 	},
 	photo: {
@@ -42,6 +46,11 @@ const userSchema = new Schema({
 		type: String,
 		//required: true,
 	},
+	phone: {
+		type: Number,
+		//required: true,
+	},
+	token:String
 });
 
 // Enable beautifying on this schema

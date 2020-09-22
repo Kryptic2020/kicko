@@ -1,12 +1,11 @@
 const passport = require('passport');
-require('../models/User');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-//const LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 //const AppleStrategy = require('passport-apple');
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const User = mongoose.model('user');
 
 // Configure Passport authenticated session persistence.
@@ -55,7 +54,7 @@ passport.use(
 			} else {
         
 				//We don't have a record with this ID, make a new record
-				const user = new User({
+				const user = await new User({
 					googleId: profile.id,
 					fullName: profile.displayName,
 					email: profile.emails[0].value,
@@ -69,6 +68,30 @@ passport.use(
 	)
 );
 
+passport.use(
+	new LocalStrategy(
+		{
+			usernameField: 'email',
+			//session: true,
+			//proxy: true,
+			//passReqToCallback: true,
+		},
+		async (email, password, done) => {
+			User.findOne({ email: email }, (err, user) => {
+			  //if (!user.emailVerified) return (null, false);
+				if (!user) return done(null, false);
+				bcrypt.compare(password, user.password, (err, result) => {
+					if (result === true) {
+						return done(null, user);
+					}
+					else {
+						return done(null, false);
+					}
+				});
+			});
+		}
+	)
+);
 
 passport.use(
 	new FacebookStrategy(
@@ -84,7 +107,7 @@ passport.use(
 			const existingUser = await User.findOne({ facebookId: profile.id });
 			if (existingUser) {
 				//already have a record with the given profile ID
-				//return done(null, existingUser)
+				return done(null, existingUser);
 			}
 			//We don't have a record with this ID, make a new record
 			const user = new User({
@@ -129,31 +152,9 @@ passport.use(
 // that the password is correct and then invoke `cb` with a user object, which
 // will be set at `req.user` in route handlers after authentication.
 
-/*
-passport.use(
-  new LocalStrategy(
-    {
-      usernameField: 'email',
-      //session: true,
-      //passReqToCallback: true,
-    },
-    async (email, password, done) => {
-      User.findOne({ email: email }, (err, user) => {
-        if (err) throw err;
-        if (!user.emailVerified) return done(null, false);
-        if (!user) return done(null, false);
-        bcrypt.compare(password, user.password, (err, result) => {
-          if (err) throw err;
-          if (result === true) {
-            return done(null, user)
-          }
-          else {
-            return done(null, false)
-          }
-        })
-      })
-    }
-  )
-);
-*/
+
+
+
+
+
 
