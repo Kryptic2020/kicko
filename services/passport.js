@@ -62,6 +62,7 @@ passport.use(
 					firstName: profile.name.givenName,
 					lastName: profile.name.familyName,
 					photo: profile.photos[0].value,
+					emailVerified: true
 				}).save().then(user => done(null, user));
 			}
 		}
@@ -116,6 +117,7 @@ passport.use(
 				provider: profile.provider,
 				firstName: profile.name.givenName,
 				lastName: profile.name.familyName,
+				emailVerified: true
 			}).save().then(user => done(null, user));
 		}
 	)
