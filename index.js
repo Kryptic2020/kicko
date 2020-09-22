@@ -2,10 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-<<<<<<< HEAD
 const bodyParser = require('body-parser');
-=======
->>>>>>> b4c6b0769838f84600e65543410f3621fe8b58bf
 const keys = require('./config/keys');
 require('./models/User'); //has to come before services/passport, position matter here.
 require('./services/passport'); 
@@ -21,18 +18,13 @@ mongoose.connect(keys.mongoURI, {
 const app = express();
 
 // Middlewares
-<<<<<<< HEAD
 app.use(bodyParser.json());
-=======
-app.use(express.json());
->>>>>>> b4c6b0769838f84600e65543410f3621fe8b58bf
 app.use(
 	cookieSession({
 		maxAge: 24 * 60 * 60 * 1000,
 		keys: [keys.cookieKey]
 	})
 );
-<<<<<<< HEAD
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
@@ -51,15 +43,6 @@ app.use((req, res, next) => {
 require('./routes/googleAuthRoutes')(app);
 require('./routes/facebookAuthRoutes')(app);
 require('./routes/localAuthRoutes')(app);
-=======
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Define routes.
-require('./routes/googleAuthRoutes')(app);
-require('./routes/facebookAuthRoutes')(app);
-//require('./routes/appleAuthRoutes')(app);
->>>>>>> b4c6b0769838f84600e65543410f3621fe8b58bf
 
 if (process.env.NODE_ENV === 'production') {
 	//express will serve up production assets like our main.js file, or main.css file

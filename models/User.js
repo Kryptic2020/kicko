@@ -5,7 +5,6 @@ const { Schema } = mongoose;
 
 // Create Schema
 const userSchema = new Schema({
-<<<<<<< HEAD
 	firstName: {
 		type: String,
 		//required: true,
@@ -52,45 +51,6 @@ const userSchema = new Schema({
 		//required: true,
 	},
 	token:String
-=======
-  firstName: {
-    type: String,
-    //required: true,
-  },
-  lastName: {
-    type: String,
-    //required: true,
-  },
-  email: {
-    type: String,
-    //required: true,
-    unique: 'Two users cannot share the same email ({VALUE})',
-  },
-  password: {
-    type: String,
-    //required: true,
-  },
-  photo: {
-    type: String,
-    //required: true,
-  },
-  provider: {
-    type: String,
-    //required: true,
-  },
-  fullName: {
-    type: String,
-    //required: true,
-  },
-  googleId: {
-    type: String,
-    //required: true,
-  },
-  facebookId: {
-    type: String,
-    //required: true,
-  },
->>>>>>> b4c6b0769838f84600e65543410f3621fe8b58bf
 });
 
 // Enable beautifying on this schema

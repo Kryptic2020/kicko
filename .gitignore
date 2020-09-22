@@ -10,10 +10,7 @@ package-lock.json
 /coverage
 
 # production
-<<<<<<< HEAD
 /build
-=======
->>>>>>> b4c6b0769838f84600e65543410f3621fe8b58bf
 
 #development
 dev.js
