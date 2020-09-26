@@ -1,12 +1,11 @@
 const passport = require('passport');
-require('../models/User');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-//const LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 //const AppleStrategy = require('passport-apple');
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const User = mongoose.model('user');
 
 // Configure Passport authenticated session persistence.
@@ -20,88 +19,109 @@ const User = mongoose.model('user');
 
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
-  //console.log(user);
+	done(null, user.id);
+	//console.log(user);
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => {
-    done(null, user);
-  });
-  //console.log(id);
+	User.findById(id).then(user => {
+		done(null, user);
+	});
+	//console.log(id);
 });
 
 passport.use(
-  new GoogleStrategy(
-    {
-      clientID: keys.googleClientID,
-      clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback',
-      proxy: true,
-    },
-    //test
-    /*
+	new GoogleStrategy(
+		{
+			clientID: keys.googleClientID,
+			clientSecret: keys.googleClientSecret,
+			callbackURL: '/auth/google/callback',
+			proxy: true,
+		},
+		//test
+		/*
     (accessToken, refreshToken, profile, done) => {
       console.log('accessToken', accessToken);
       console.log('refreshToken', refreshToken);
       console.log('profile', profile);
     }*/
     
-    async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await User.findOne({ googleId: profile.id }); console.log('hi');
-      if (existingUser) {
-        //already have a record with the given profile ID
-        return done(null, existingUser);
-      } else {
+		async (accessToken, refreshToken, profile, done) => {
+			const existingUser = await User.findOne({ googleId: profile.id });
+			if (existingUser) {
+				//already have a record with the given profile ID
+				return done(null, existingUser);
+			} else {
         
-        //We don't have a record with this ID, make a new record
-        const user = await new User({
-          googleId: profile.id,
-          fullName: profile.displayName,
-          email: profile.emails[0].value,
-          provider: profile.provider,
-          firstName: profile.name.givenName,
-          lastName: profile.name.familyName,
-          photo: profile.photos[0].value,
-        })
-          .save();
-          //.done(null, user);
-      }
-    }
-  )
+				//We don't have a record with this ID, make a new record
+				const user = await new User({
+					googleId: profile.id,
+					fullName: profile.displayName,
+					email: profile.emails[0].value,
+					provider: profile.provider,
+					firstName: profile.name.givenName,
+					lastName: profile.name.familyName,
+					photo: profile.photos[0].value,
+					emailVerified: true
+				}).save().then(user => done(null, user));
+			}
+		}
+	)
 );
-
 
 passport.use(
-  new FacebookStrategy(
-    {
-      clientID: keys.facebookClientID,
-      clientSecret: keys.facebookClientSecret,
-      callbackURL: '/auth/facebook/callback',
-      proxy: true,
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      console.log(profile);
-
-      const existingUser = await User.findOne({ facebookId: profile.id });
-      if (existingUser) {
-        //already have a record with the given profile ID
-        //return done(null, existingUser)
-      }
-      //We don't have a record with this ID, make a new record
-      const user = new User({
-        facebookId: profile.id,
-        fullName: profile.displayName,
-        provider: profile.provider,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-      }).save();
-      //.done(null, user);
-      //console.log('profile', profile);
-    }
-  )
+	new LocalStrategy(
+		{
+			usernameField: 'email',
+			//session: true,
+			//proxy: true,
+			//passReqToCallback: true,
+		},
+		async (email, password, done) => {
+			User.findOne({ email: email }, (err, user) => {
+			  //if (!user.emailVerified) return (null, false);
+				if (!user) return done(null, false);
+				bcrypt.compare(password, user.password, (err, result) => {
+					if (result === true) {
+						return done(null, user);
+					}
+					else {
+						return done(null, false);
+					}
+				});
+			});
+		}
+	)
 );
 
+passport.use(
+	new FacebookStrategy(
+		{
+			clientID: keys.facebookClientID,
+			clientSecret: keys.facebookClientSecret,
+			callbackURL: '/auth/facebook/callback',
+			proxy: true,
+		},
+		async (accessToken, refreshToken, profile, done) => {
+			console.log(profile);
+
+			const existingUser = await User.findOne({ facebookId: profile.id });
+			if (existingUser) {
+				//already have a record with the given profile ID
+				return done(null, existingUser);
+			}
+			//We don't have a record with this ID, make a new record
+			const user = new User({
+				facebookId: profile.id,
+				fullName: profile.displayName,
+				provider: profile.provider,
+				firstName: profile.name.givenName,
+				lastName: profile.name.familyName,
+				emailVerified: true
+			}).save().then(user => done(null, user));
+		}
+	)
+);
 /*
 passport.use(
   new AppleStrategy(
@@ -134,31 +154,9 @@ passport.use(
 // that the password is correct and then invoke `cb` with a user object, which
 // will be set at `req.user` in route handlers after authentication.
 
-/*
-passport.use(
-  new LocalStrategy(
-    {
-      usernameField: 'email',
-      //session: true,
-      //passReqToCallback: true,
-    },
-    async (email, password, done) => {
-      User.findOne({ email: email }, (err, user) => {
-        if (err) throw err;
-        if (!user.emailVerified) return done(null, false);
-        if (!user) return done(null, false);
-        bcrypt.compare(password, user.password, (err, result) => {
-          if (err) throw err;
-          if (result === true) {
-            return done(null, user)
-          }
-          else {
-            return done(null, false)
-          }
-        })
-      })
-    }
-  )
-);
-*/
+
+
+
+
+
 

@@ -9,27 +9,27 @@ const { loginValidation } = require('../../api/middlewares/validation');
 const User = mongoose.model('user');
 
 module.exports = app => {
-  // @route GET api/user
-  // @desc Get user
-  // @access Public
-  app.get('/login', async (req, res) => {
-    // Validation
-    const { error } = loginValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+	// @route GET api/user
+	// @desc Get user
+	// @access Public
+	app.get('/loginx', async (req, res) => {
+		// Validation
+		const { error } = loginValidation(req.body);
+		if (error) return res.status(400).send(error.details[0].message);
 
-    // Checking if email exists
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).send('Email is not correct');
+		// Checking if email exists
+		const user = await User.findOne({ email: req.body.email });
+		if (!user) return res.status(400).send('Email is not correct');
 
-    // Checking the password
-    const validPass = await bcrypt.compare(req.body.password, user.password);
-    if (!validPass) return res.status(400).send('Password is not correct');
+		// Checking the password
+		const validPass = await bcrypt.compare(req.body.password, user.password);
+		if (!validPass) return res.status(400).send('Password is not correct');
 
-    // Create and assign token
-    const token = jwt.sign({ _id: user._id }, jwtToken.secretKey);
-    res.header('Auth-Token', token).send(token);
-  });
-}
+		// Create and assign token
+		const token = jwt.sign({ _id: user._id }, jwtToken.secretKey);
+		res.header('Auth-Token', token).send(token);
+	});
+};
 
 
 

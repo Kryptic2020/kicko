@@ -1,0 +1,173 @@
+.Body {
+  background-color: #5CBD6F;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+}
+
+.Container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.BoxAppName {
+  padding-top: 88px;
+}
+.Logo {
+  box-sizing: border-box;
+  border:3px white solid;
+  width: 68px;
+  height: 57px;
+  background-color: teal;
+  border-radius: 5px 5px 5px 5px;
+  padding: 10px;
+}
+
+.AppName {
+  font-size: 60px;
+  width: 265px;
+  height: 68px;
+  color: #FFFFFF;
+  font-weight: bolder;
+  padding-left: 10px;
+}
+
+.Email {
+  width: 341px;
+  height: 30px;
+  border:none;
+  background-color: #5CBD6F;
+  border-bottom: 2px #FFFFFF solid;
+  color: #FFFFFF;
+  margin-top: 103px;
+  
+}
+
+.Password {
+  width: 341px;
+  border:none;
+  background-color: #5CBD6F;
+  border-bottom: 2px #FFFFFF solid;
+  color: #FFFFFF;
+  margin-top: 40px;
+  font-weight: normal;
+}
+
+.ForgotPass {
+  font-size: 13px;
+  color: #FFFFFF;
+  width: 341px;
+  height: 30px;
+  margin-top: 31px;
+}
+.Login {
+  font-size: 18px;
+  width: 341px;
+  height: 64px;
+  background-color: #FFFFFF;
+  color:#5CBD6F;
+  margin-top: 25px;
+  font-weight: bold;
+  border-radius: 5px 5px 5px 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.Or {
+  width: 100px;
+  color: #FFFFFF;
+  margin-top: 35px;
+}
+
+
+.Facebook {
+  font-size: 15px;
+  color: #FFFFFF;
+  width: 341px;
+  height: 51px;
+  text-align: left;
+  background-color: #4B9F5C;
+  border-radius: 5px 5px 5px 5px;
+  margin-top: 23px;
+}
+.Google {
+  font-size: 15px;
+  color: #FFFFFF;
+  width: 341px;
+  height: 51px;
+  text-align: left;
+  background-color: #4B9F5C;
+  border-radius: 5px 5px 5px 5px;
+  margin-top: 10px;
+}
+
+
+.Apple {
+  font-size: 15px;
+  color: #FFFFFF;
+  width: 341px;
+  height: 51px;
+  text-align: left;
+  background-color: #4B9F5C;
+  border-radius: 5px 5px 5px 5px;
+  margin-top: 10px;
+}
+
+.RegisterNow {
+  background-color:white;
+  width: 341px;
+}
+
+::-webkit-input-placeholder {
+color: #FFFFFF;
+font-size: 18px;
+}
+.Simbol {
+  color: #FFFFFF;
+  font-size: 25px;
+  font-weight: bolder;
+  padding-right: 20px;
+  padding-left: 10px;
+  margin-left: 20px;
+}
+
+.Register{
+ background-color:white;  
+ width: 341px;
+ height: 90px;
+ text-align: center;
+ margin-top: 64px;
+ padding:15px;
+ border-radius: 20px 20px 0px 0px;
+ box-sizing: border-box;
+
+}
+
+.RegisterButton{
+ background-color:white;  
+ width: 118px;
+ height: 47px;
+ text-align: center;
+ padding-top: 10px;
+ border-radius: 10px 10px 10px 10px;
+ box-sizing: border-box;
+ color:#4B9F5C;
+ font-weight: bold;
+ font-size: 16px;
+ margin-left:80%;
+ margin-top:0%;
+}
+
+
+@media (min-width:601px) {
+ .Register{
+  display: none;
+ }
+}
+
+@media (max-width:600px) {
+ .RegisterButton{
+  display: none;
+ }
+}
+
