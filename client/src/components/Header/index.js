@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
 
-import logo from '../../assets/logo.png'
+import useStyles from './styles';
+
+import logo from '../../assets/logo.png';
 
 export default function Header() {
+    const classes = useStyles();
     return (
-        <header>
+        <header className={classes.appHeader}>
             <img src={logo} alt="Logo" />
         </header>
     )
-}
+};

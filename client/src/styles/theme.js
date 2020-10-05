@@ -15,6 +15,10 @@ const theme = createMuiTheme({
                     backgroundColor: '#5CBD6F',
                     color: '#FFFFFF',
                 },
+                h1: {
+                    fontSize: '40px',
+                    fontWeight: '800'
+                }
             },
         },
         MuiInputLabel: {

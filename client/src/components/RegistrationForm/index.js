@@ -1,7 +1,4 @@
 import React from 'react';
-import {
-	Link
-} from "react-router-dom";
 
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -15,8 +12,9 @@ import SubmitButton from '../../styles/global';
 
 import useStyles from './styles';
 
-export default function LogInForm() {
+export default function RegistrationForm() {
     const [values, setValues] = React.useState({
+        yourName: '',
         email: '',
         password: '',
         showPassword: false,
@@ -42,6 +40,17 @@ export default function LogInForm() {
                 noValidate 
                 autoComplete="off" 
                 className={classes.appForm}>
+                <FormControl fullWidth>
+                    <InputLabel 
+                        htmlFor="your-name"
+                    >Your name</InputLabel>
+                    <Input
+                        id="your-name"
+                        type="text"
+                        value={values.yourName}
+                        onChange={handleChange('your-name')}
+                    />
+                </FormControl>
                 <FormControl fullWidth>
                     <InputLabel 
                         htmlFor="email"
@@ -74,14 +83,12 @@ export default function LogInForm() {
                         </InputAdornment>
                         }
                     />
+                    <span>It must include numbers, letters and special characters.</span>
                 </FormControl>
-                <Link 
-                    to="/forgot-password"
-                    className={classes.forgotLink}>Forgot your password?</Link>
                 <SubmitButton 
                     fullWidth
                     size="large">
-                    Log in
+                    Confirm registration
                 </SubmitButton>
             </form>
         </>
