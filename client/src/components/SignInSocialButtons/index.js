@@ -12,15 +12,15 @@ export default function SignInSocialButtons() {
                 fullWidth
                 size="large"
                 href="/auth/facebook"
-                startIcon={<FontAwesomeIcon icon={faFacebookF} />}>
+                startIcon={<FontAwesomeIcon icon={faFacebookF } />}>
                 Sign in with Facebook
             </SignInButton>
             <SignInButton
                 fullWidth
                 size="large"
                 href="/auth/google"
-                startIcon={<FontAwesomeIcon icon={faGoogle} />}>
-                Sign in with Google
+                startIcon={<FontAwesomeIcon icon={faGoogle } />}>
+                    Sign in with Google
             </SignInButton>
         </>
     )
