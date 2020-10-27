@@ -52,6 +52,11 @@ const theme = createMuiTheme({
                 }
             }
         },
+        MuiIconButton: {
+            root: {
+                color: 'inherit',
+            }
+        },
     },
 });
 

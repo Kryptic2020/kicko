@@ -16,6 +16,7 @@ export default function RegistrationForm() {
     const [values, setValues] = React.useState({
         yourName: '',
         email: '',
+        phone: '',
         password: '',
         showPassword: false,
     });
@@ -64,6 +65,17 @@ export default function RegistrationForm() {
                 </FormControl>
                 <FormControl fullWidth>
                     <InputLabel 
+                        htmlFor="phone"
+                    >Phone ( optional )</InputLabel>
+                    <Input
+                        id="phone"
+                        type="text"
+                        value={values.phone}
+                        onChange={handleChange('phone')}
+                    />
+                </FormControl>
+                <FormControl fullWidth>
+                    <InputLabel 
                         htmlFor="password"
                     >Password</InputLabel>
                     <Input
@@ -83,7 +95,7 @@ export default function RegistrationForm() {
                         </InputAdornment>
                         }
                     />
-                    <span>It must include numbers, letters and special characters.</span>
+                    <span style={{ marginTop: '5px', fontSize: '12px' }}>It must include numbers, letters and special characters.</span>
                 </FormControl>
                 <SubmitButton 
                     fullWidth

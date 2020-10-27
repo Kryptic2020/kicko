@@ -9,11 +9,6 @@ const useStyles = makeStyles({
             }
         }
     },
-    forgotLink: {
-        color: '#FFFFFF',
-        textDecoration: 'none',
-        display: 'inline-block'
-    },
 });
 
 export default useStyles;

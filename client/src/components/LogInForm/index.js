@@ -34,6 +34,21 @@ export default function LogInForm() {
         event.preventDefault();
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const { email, password } = values;
+
+        if( email !== '' && password !== '' ) {
+            console.log('Submited');
+        } else {
+            handleErrors();
+        }
+    };
+
+    const handleErrors = () => {
+        alert( 'Error' );
+    }
+
     const classes = useStyles();
 
     return (
@@ -80,7 +95,8 @@ export default function LogInForm() {
                     className={classes.forgotLink}>Forgot your password?</Link>
                 <SubmitButton 
                     fullWidth
-                    size="large">
+                    size="large"
+                    onClick={handleSubmit}>
                     Log in
                 </SubmitButton>
             </form>

@@ -9,6 +9,7 @@ const SubmitButton = styled(Button)({
     padding: '13px 22px',
     fontSize: '18px',
     fontWeight: 'bold',
+    marginTop: '25px',
     '&:hover': {
         backgroundColor: '#FFFFFF',
     }
