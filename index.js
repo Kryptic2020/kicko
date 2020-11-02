@@ -5,6 +5,8 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 require('./models/User'); //has to come before services/passport, position matter here.
+require('./models/Groups');
+require('./models/Events');
 require('./services/passport'); 
 
 // DB Connect
@@ -43,6 +45,8 @@ app.use((req, res, next) => {
 require('./routes/googleAuthRoutes')(app);
 require('./routes/facebookAuthRoutes')(app);
 require('./routes/localAuthRoutes')(app);
+require('./routes/groupsEventsRoutes')(app);
+
 
 if (process.env.NODE_ENV === 'production') {
 	//express will serve up production assets like our main.js file, or main.css file
